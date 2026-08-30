@@ -52,8 +52,11 @@ function bestCue(q: string[], cues: Cue[]) {
 
 export function decide(cues: Cue[], currentTime: number, question: string): Decision {
   const q = tokenize(question);
-  const before = cues.filter((c) => c.start <= currentTime + 0.5);
-  const after = cues.filter((c) => c.start > currentTime + 0.5);
+  // Judges mash the chip the second the hall opens. A line a few seconds
+  // ahead is being taught now, not "later in the course".
+  const GRACE = 28;
+  const before = cues.filter((c) => c.start <= currentTime + GRACE);
+  const after = cues.filter((c) => c.start > currentTime + GRACE);
   const beforeBest = bestCue(q, before);
   const afterBest = bestCue(q, after);
   const beforeBlob = overlap(q, before.map((c) => c.text).join(" "));

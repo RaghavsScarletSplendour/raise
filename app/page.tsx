@@ -25,8 +25,8 @@ export default function Home() {
       <p className="fine">
         Unofficial study avatar. Public lecture plus public captions only.
         This is not the professor, and it will not fake the rest of the video.
-        Ninety-second demo: tap IIT KGP OS, let it play, raise Why an OS, then
-        ask virtual memory. For the yank, hit Later in the lecture and ask Why an OS again.
+        Ninety-second demo: tap Crash Course OS, let it play ten seconds, tap What is an OS,
+        then Virtual memory. For the yank, hit Later in the lecture and tap What is an OS again.
       </p>
     </main>
   );

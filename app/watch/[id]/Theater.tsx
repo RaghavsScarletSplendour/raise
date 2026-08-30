@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Lecture } from "@/lib/seeds";
-import type { Decision } from "@/lib/raise";
+import { decide, type Decision } from "@/lib/raise";
 
 declare global {
   interface Window {
@@ -26,9 +26,13 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     const boot = () => {
+      if (cancelled) return;
       if (!window.YT?.Player) return;
       if (playerRef.current) return;
+      const el = document.getElementById("yt");
+      if (!el) return;
       playerRef.current = new window.YT.Player("yt", {
         videoId: lecture.youtubeId,
         host: "https://www.youtube.com",
@@ -36,10 +40,11 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
-          origin: typeof window !== "undefined" ? window.location.origin : "",
         },
         events: {
-          onReady: () => setReady(true),
+          onReady: () => {
+            if (!cancelled) setReady(true);
+          },
         },
       });
     };
@@ -53,7 +58,12 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         document.body.appendChild(s);
       }
     }
+    const fallback = window.setTimeout(() => {
+      if (!cancelled) setReady(true);
+    }, 2500);
     return () => {
+      cancelled = true;
+      window.clearTimeout(fallback);
       if (yankTimer.current) window.clearInterval(yankTimer.current);
     };
   }, [lecture.youtubeId]);
@@ -100,19 +110,21 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     }, 900);
   }
 
-  async function raise(question: string) {
-    if (!ready || busy) return;
+  function speakThenBack() {
+    pause();
+    setMode("speak");
+    window.setTimeout(() => setOut(true), 80);
+    window.setTimeout(() => climbBack(resumeAt.current), 7200);
+  }
+
+  function raise(question: string) {
+    if (busy) return;
     const text = question.trim();
     if (!text) return;
     setBusy(true);
     const currentTime = now();
     resumeAt.current = currentTime;
-    const res = await fetch("/api/raise", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lectureId: lecture.id, currentTime, question: text }),
-    });
-    const data: Decision = await res.json();
+    const data = decide(lecture.captions, currentTime, text);
     setDecision(data);
 
     if (data.kind === "refuse") {
@@ -121,7 +133,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         setMode("idle");
         setDecision(null);
         setBusy(false);
-      }, 2800);
+      }, 4200);
       return;
     }
 
@@ -135,27 +147,27 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
       clearYankWatch();
       yankTimer.current = window.setInterval(() => {
         const t = now();
-        if (t < start - 0.4) seek(start);
+        if (t > 0 && t < start - 0.4) seek(start);
         if (t >= end) {
           clearYankWatch();
-          pause();
-          setMode("speak");
-          window.setTimeout(() => setOut(true), 80);
-          window.setTimeout(() => climbBack(resumeAt.current), 5600);
+          speakThenBack();
         }
       }, 200);
+      window.setTimeout(() => {
+        if (yankTimer.current) {
+          clearYankWatch();
+          speakThenBack();
+        }
+      }, 9000);
       return;
     }
 
-    pause();
-    setMode("speak");
-    window.setTimeout(() => setOut(true), 80);
-    window.setTimeout(() => climbBack(resumeAt.current), 5600);
+    speakThenBack();
   }
 
   function later() {
-    if (!ready || busy) return;
-    seek(600);
+    if (busy) return;
+    seek(lecture.laterAt);
     play();
   }
 
@@ -167,6 +179,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         <Link href="/">RAISE</Link>
         <div className="meta">
           {lecture.prof} · {lecture.hall}
+          {ready ? "" : " · cueing the projector"}
         </div>
       </div>
       <div className="stage-wrap">
@@ -190,17 +203,17 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
       <div className="rail">
         <button
           className="hand primary"
-          disabled={!ready || busy}
+          disabled={busy}
           onClick={() => raise(q)}
           title="Raise hand"
         >
-          Raise
+          Raise hand
         </button>
         {lecture.ghosts.map((g) => (
           <button
             key={g.label}
             className="ghost"
-            disabled={!ready || busy}
+            disabled={busy}
             onClick={() => {
               setQ(g.question);
               raise(g.question);
@@ -221,11 +234,11 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
             onChange={(e) => setQ(e.target.value)}
             placeholder="Raise a question from this lecture"
           />
-          <button className="primary" disabled={!ready || busy} type="submit">
+          <button className="primary" disabled={busy} type="submit">
             Ask
           </button>
         </form>
-        <button className="later" type="button" disabled={!ready || busy} onClick={later}>
+        <button className="later" type="button" disabled={busy} onClick={later}>
           Later in the lecture
         </button>
       </div>

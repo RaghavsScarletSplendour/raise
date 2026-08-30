@@ -274,8 +274,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .hand {
-  width: 42px;
-  height: 42px;
+  min-width: 7.5rem;
   border-radius: 0;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
 }

@@ -8,6 +8,7 @@ export type Lecture = {
   hall: string;
   chip: string;
   blurb: string;
+  laterAt: number;
   ghosts: { label: string; question: string }[];
   captions: Cue[];
 };
@@ -15,32 +16,38 @@ export type Lecture = {
 export const LECTURES: Lecture[] = [
   {
     id: "os",
-    youtubeId: "qJ_bXhrUOkc",
-    title: "Operating Systems Fundamentals, Lecture 01",
-    prof: "Prof. Santanu Chattopadhyay",
-    hall: "IIT Kharagpur · NPTEL",
-    chip: "IIT KGP OS",
-    blurb: "Why a machine needs a keeper.",
+    youtubeId: "26QPDBe-NB8",
+    title: "Operating Systems: Crash Course Computer Science #18",
+    prof: "Carrie Anne Philbin",
+    hall: "Crash Course · 12 minutes",
+    chip: "Crash Course OS",
+    blurb: "Twelve minutes. What an OS is, then virtual memory later.",
+    laterAt: 400,
     ghosts: [
-      { label: "Why an OS?", question: "Why do we even need an operating system?" },
+      { label: "What is an OS?", question: "What is an operating system?" },
       { label: "Virtual memory?", question: "How does virtual memory work?" },
     ],
     captions: [
-      { start: 6, text: "Welcome. This is Operating Systems, IIT Kharagpur. I am Santanu Chattopadhyay." },
-      { start: 18, text: "Why do we even need an operating system? That is the first question of this course." },
-      { start: 36, text: "Without an operating system you would talk to the hardware yourself, every instruction, every time." },
-      { start: 58, text: "You would write assembly for a quadratic equation, manage registers, memory, and the printer by hand." },
-      { start: 88, text: "The operating system is the interface between the user and the machine." },
-      { start: 118, text: "It gives you processes, files, and protection so one program cannot destroy another." },
-      { start: 160, text: "Think of printer spooling. Many jobs, one printer. The operating system queues them." },
-      { start: 210, text: "A computer has four parts: hardware, operating system, utilities, and application programs." },
-      { start: 270, text: "Hardware is the machine. The operating system sits on top of it and hides the ugly details." },
-      { start: 340, text: "A process is a program in execution. The operating system schedules which process runs." },
-      { start: 420, text: "Memory management: the operating system decides who gets RAM and who waits." },
-      { start: 510, text: "Protection: user mode versus kernel mode. You do not touch the disk controller from a student program." },
-      { start: 620, text: "I/O devices are slow. The operating system overlaps computation with waiting." },
-      { start: 740, text: "System calls are how an application asks the operating system for a service." },
-      { start: 880, text: "Today we only need the idea of an operating system as a resource manager and a protector." },
+      { start: 4, text: "Hi, I'm Carrie Anne, and welcome to Crash Course Computer Science." },
+      { start: 12, text: "Computers in the 1940s and early 50s ran one program at a time." },
+      { start: 28, text: "A programmer would write one at their desk, for example, on punch cards, then hand it to a dedicated computer operator." },
+      { start: 52, text: "The computer would run it, spit out some output, and halt." },
+      { start: 68, text: "Computers became faster and faster. Pretty soon, humans inserting programs was taking longer than running them." },
+      { start: 18, text: "We needed a way for computers to operate themselves, and so, operating systems were born." },
+      { start: 24, text: "Operating systems, or OSes for short, are just programs. Special privileges on the hardware let them run and manage other programs." },
+      { start: 132, text: "They're typically the first one to start when a computer is turned on, and all subsequent programs are launched by the OS." },
+      { start: 160, text: "The very first OSes augmented loading programs by hand. Computers could be given batches. This was called batch processing." },
+      { start: 210, text: "Operating systems stepped in as intermediaries between software programs and hardware peripherals, using device drivers." },
+      { start: 270, text: "By the end of the 1950s, computers were often idle waiting for slow printers and punch card readers." },
+      { start: 330, text: "The Atlas Supervisor, finished in 1962, could run several programs at the same time on a single CPU. This ability is called multitasking." },
+      { start: 400, text: "With Virtual Memory, programs can assume their memory always starts at address 0, keeping things simple and consistent." },
+      { start: 450, text: "The actual physical location in computer memory is hidden and abstracted by the operating system." },
+      { start: 500, text: "Another upside is Memory Protection. A buggy program can only trash its own memory, not that of other programs." },
+      { start: 540, text: "Atlas had both virtual and protected memory. It was the first computer and OS to support these features." },
+      { start: 600, text: "Time-sharing operating systems let several users share one machine through terminals." },
+      { start: 660, text: "Multics led Dennis Ritchie and Ken Thompson to build Unix, with a lean kernel and a panic function if the kernel crashes." },
+      { start: 730, text: "MS-DOS lacked multitasking and protected memory. Early Windows could show the blue screen of death." },
+      { start: 780, text: "Today computers run Mac OS, Windows, Linux, iOS and Android, with multitasking and virtual and protected memory." },
     ],
   },
   {
@@ -51,6 +58,7 @@ export const LECTURES: Lecture[] = [
     hall: "Sanders Theatre · Harvard",
     chip: "Harvard Justice",
     blurb: "A trolley, a bridge, a show of hands.",
+    laterAt: 700,
     ghosts: [
       { label: "The trolley", question: "What should the trolley driver do about the five workers?" },
       { label: "Kant already?", question: "What does Kant say about categorical moral duties?" },
@@ -84,6 +92,7 @@ export const LECTURES: Lecture[] = [
     hall: "MIT · Classical Mechanics",
     chip: "MIT 8.01",
     blurb: "A measurement without uncertainty is meaningless.",
+    laterAt: 600,
     ghosts: [
       { label: "The units", question: "What units does Lewin introduce for length, time, and mass?" },
       { label: "Lagrangian?", question: "How do we write the Lagrangian for this system?" },

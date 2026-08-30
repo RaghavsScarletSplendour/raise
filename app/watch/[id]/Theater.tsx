@@ -13,6 +13,7 @@ declare global {
 }
 
 type Mode = "idle" | "yank" | "refuse" | "speak";
+type Strike = { kind: "yank" | "refuse"; cite?: string };
 
 export default function Theater({ lecture }: { lecture: Lecture }) {
   const playerRef = useRef<any>(null);
@@ -26,6 +27,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   const [busy, setBusy] = useState(false);
   const [step, setStep] = useState(0);
   const [strikes, setStrikes] = useState(0);
+  const [log, setLog] = useState<Strike[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -134,7 +136,13 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     resumeAt.current = now() || currentTime;
     const data = decide(lecture.captions, currentTime, text);
     setDecision(data);
-    if (data.kind === "yank" || data.kind === "refuse") setStrikes((n) => n + 1);
+    if (data.kind === "yank" || data.kind === "refuse") {
+      setStrikes((n) => n + 1);
+      setLog((rows) => [
+        ...rows,
+        { kind: data.kind, cite: data.cite },
+      ]);
+    }
 
     if (data.kind === "refuse") {
       setMode("refuse");
@@ -184,6 +192,15 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   }
 
   const frozen = mode === "speak";
+  const coach = !ready
+    ? "Wait. The lecture is still walking in."
+    : mode === "yank"
+      ? "Caught. Rewatch. Hands down."
+      : mode === "refuse"
+        ? "I have not taught that. Sit."
+        : mode === "speak"
+          ? "Office hours. Listen."
+          : "Three taps. In order. If you mess this up I will know.";
 
   return (
     <div className="theater-root">
@@ -198,7 +215,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
       <div className="stage-wrap">
         <div className={`stage ${frozen ? "frozen" : ""} ${mode === "yank" ? "caught" : ""} ${mode === "refuse" ? "seated" : ""}`}>
           <div id="yt" className="yt-slot" />
-          <Professor out={out} />
+          <Professor mood={out ? "out" : mode === "refuse" ? "seated" : "hidden"} />
           <div className={`faculty-live ${mode === "speak" ? "paused" : mode === "refuse" ? "seated" : ""}`}>
             {mode === "speak" ? "paused by faculty" : mode === "refuse" ? "sit down" : "live"}
           </div>
@@ -226,7 +243,16 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         </div>
       </div>
       <div className="rail">
-        <p className="coach">{ready ? "Three taps. In order. If you mess this up I will know." : "Wait. The lecture is still walking in."}</p>
+        <p className="coach">{coach}</p>
+        {log.length > 0 && (
+          <div className="shame" aria-live="polite">
+            {log.map((row, i) => (
+              <span key={`${row.kind}-${i}`}>
+                strike {i + 1} · {row.kind === "yank" ? `yanked ${row.cite || ""}`.trim() : "sat down"}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="moves">
           {lecture.ghosts.slice(0, 3).map((g, i) => (
             <button
@@ -254,7 +280,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
             onChange={(e) => setQ(e.target.value)}
             placeholder="Ask something I actually said, genius"
           />
-          <button className="primary" disabled={busy || !ready} type="submit">
+          <button className="primary raise-hand" disabled={busy || !ready} type="submit">
             Raise hand
           </button>
         </form>
@@ -263,9 +289,10 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   );
 }
 
-function Professor({ out }: { out: boolean }) {
+function Professor({ mood }: { mood: "hidden" | "out" | "seated" }) {
+  const seated = mood === "seated";
   return (
-    <svg className={`prof ${out ? "out" : ""}`} viewBox="0 0 160 220" aria-hidden>
+    <svg className={`prof ${mood === "out" ? "out" : ""} ${seated ? "seated" : ""}`} viewBox="0 0 160 220" aria-hidden>
       <ellipse cx="80" cy="208" rx="36" ry="6" fill="rgba(22,24,27,0.18)" />
       <path d="M52 206c8-48 16-80 28-94 12 14 20 46 28 94" fill="#16181B" />
       <rect x="62" y="98" width="36" height="48" rx="10" fill="#16181B" />
@@ -274,7 +301,14 @@ function Professor({ out }: { out: boolean }) {
       <path d="M62 70c6-16 30-16 36 0" fill="#16181B" />
       <circle cx="73" cy="76" r="2.4" fill="#16181B" />
       <circle cx="87" cy="76" r="2.4" fill="#16181B" />
-      <path d="M73 86c4 5 10 5 14 0" stroke="#16181B" strokeWidth="2" fill="none" />
+      {seated ? (
+        <>
+          <path d="M73 88c4-4 10-4 14 0" stroke="#16181B" strokeWidth="2" fill="none" />
+          <ellipse cx="68" cy="82" rx="10" ry="8" fill="#F6F4EE" stroke="#16181B" strokeWidth="3" />
+        </>
+      ) : (
+        <path d="M73 86c4 5 10 5 14 0" stroke="#16181B" strokeWidth="2" fill="none" />
+      )}
       <rect x="118" y="120" width="5" height="48" rx="2" fill="#16181B" />
       <circle cx="120.5" cy="118" r="4" fill="#FFCE45" />
     </svg>

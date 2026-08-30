@@ -184,7 +184,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   const frozen = mode === "speak";
 
   return (
-    <div>
+    <div className="theater-root">
       <div className="topbar">
         <Link href="/">RAISE</Link>
         <div className="meta">

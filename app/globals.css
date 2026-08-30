@@ -575,7 +575,7 @@ h1 {
 .rail { align-items: stretch; }
 .ask { width: 100%; flex: 1 1 100%; }
 
-/* cream lecture, small player */
+/* cream lecture, medium player */
 .theater-root {
   min-height: 100dvh;
   background: #F6F4EE;
@@ -612,7 +612,7 @@ h1 {
   padding: 0 16px 16px;
 }
 .theater-root .stage {
-  width: min(420px, 86vw);
+  width: min(620px, 90vw);
   aspect-ratio: 16 / 9;
   background: #000;
   border: 2px solid #16181B;
@@ -653,7 +653,7 @@ h1 {
   font-size: clamp(1.3rem, 4vw, 2rem);
 }
 .theater-root .rail {
-  max-width: 560px;
+  max-width: 620px;
   margin: 0 auto;
   padding: 0 16px 40px;
   display: flex;

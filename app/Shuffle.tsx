@@ -89,7 +89,7 @@ export default function Shuffle() {
       <div className="topbar">
         <div>
           <div className="stamp">RAISE</div>
-          <div className="tagline">a real lecture. raise a hand. get caught.</div>
+          <div className="tagline">unofficial faculty · a real lecture. raise a hand. get caught.</div>
         </div>
         <div className="topbar-actions">
           <Link href="/watch/os" className="demo-link">

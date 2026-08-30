@@ -25,6 +25,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   const [decision, setDecision] = useState<Decision | null>(null);
   const [busy, setBusy] = useState(false);
   const [step, setStep] = useState(0);
+  const [strikes, setStrikes] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -133,6 +134,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     resumeAt.current = now() || currentTime;
     const data = decide(lecture.captions, currentTime, text);
     setDecision(data);
+    if (data.kind === "yank" || data.kind === "refuse") setStrikes((n) => n + 1);
 
     if (data.kind === "refuse") {
       setMode("refuse");
@@ -190,17 +192,30 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         <div className="meta">
           {lecture.prof}
           {ready ? "" : " · loading"}
+          {strikes ? ` · ${strikes} strike${strikes === 1 ? "" : "s"}` : ""}{mode === "yank" ? " · caught" : mode === "refuse" ? " · seated" : mode === "speak" ? " · office hours" : " · in session"}
         </div>
       </div>
       <div className="stage-wrap">
-        <div className={`stage ${frozen ? "frozen" : ""}`}>
+        <div className={`stage ${frozen ? "frozen" : ""} ${mode === "yank" ? "caught" : ""} ${mode === "refuse" ? "seated" : ""}`}>
           <div id="yt" className="yt-slot" />
           <Professor out={out} />
-          {mode === "yank" && (
-            <div className="banner">Caught you. Rewatch. No skip. {decision?.cite}</div>
+          <div className={`faculty-live ${mode === "speak" ? "paused" : mode === "refuse" ? "seated" : ""}`}>
+            {mode === "speak" ? "paused by faculty" : mode === "refuse" ? "sit down" : "live"}
+          </div>
+          {mode !== "idle" && (
+            <div key={mode} className={`hit-stamp ${mode}`} aria-hidden>
+              {mode === "yank" ? "YANKED" : mode === "refuse" ? "SAT DOWN" : "NOTED"}
+            </div>
           )}
-          {mode === "refuse" && (
-            <div className="banner">{decision?.text || "I haven't taught that yet. Sit down."}</div>
+          {(mode === "yank" || mode === "refuse") && (
+            <div className="detention">
+              <div className="detention-mark">DETENTION</div>
+              <p>
+                {mode === "yank"
+                  ? `You were taught this at ${decision?.cite || "that timestamp"}. Rewatch. No skip.`
+                  : decision?.text || "I haven't taught that yet. Sit down."}
+              </p>
+            </div>
           )}
           <div className={`bubble ${mode === "speak" && out ? "show" : ""}`}>
             {decision?.text}
@@ -211,13 +226,13 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         </div>
       </div>
       <div className="rail">
-        <p className="coach">Three taps. In order. If you mess this up I will know.</p>
+        <p className="coach">{ready ? "Three taps. In order. If you mess this up I will know." : "Wait. The lecture is still walking in."}</p>
         <div className="moves">
           {lecture.ghosts.slice(0, 3).map((g, i) => (
             <button
               key={g.label}
               className={`move ${i === 0 && step === 0 ? "primary" : ""} ${step === i + 1 ? "on" : ""}`}
-              disabled={busy}
+              disabled={busy || !ready}
               onClick={() => tapMove(i)}
               type="button"
             >
@@ -239,7 +254,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
             onChange={(e) => setQ(e.target.value)}
             placeholder="Ask something I actually said, genius"
           />
-          <button className="primary" disabled={busy} type="submit">
+          <button className="primary" disabled={busy || !ready} type="submit">
             Raise hand
           </button>
         </form>

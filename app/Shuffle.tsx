@@ -89,11 +89,16 @@ export default function Shuffle() {
       <div className="topbar">
         <div>
           <div className="stamp">RAISE</div>
-          <div className="tagline">lock a concept. interrupt the lecture. get roasted.</div>
+          <div className="tagline">a real lecture. raise a hand. get caught.</div>
         </div>
-        <Link href="/you" className="roast-link">
-          Roast me first
-        </Link>
+        <div className="topbar-actions">
+          <Link href="/watch/os" className="demo-link">
+            90 second demo
+          </Link>
+          <Link href="/you" className="roast-link">
+            Roast me first
+          </Link>
+        </div>
       </div>
 
       {view === "shuffle" && (

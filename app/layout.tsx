@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RAISE — raise your hand",
+  title: "RAISE · raise your hand",
   description:
-    "Shuffle a concept. Lock it. A snippet, or the real lecture starts playing. Unofficial study avatar. Public captions only.",
+    "A real lecture plays. Raise a hand. If you skip, you get yanked. Unofficial study avatar. Public captions only.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

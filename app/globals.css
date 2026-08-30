@@ -944,3 +944,114 @@ h1 {
   .you-title { font-size: clamp(2rem, 11vw, 3rem); }
   .you-choice { font-size: 14px; }
 }
+
+
+.stand .topbar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.stand .demo-link {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.stand .demo-link:hover {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.theater-root .faculty-live {
+  position: absolute;
+  z-index: 6;
+  left: 10px;
+  top: 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: #c1121f;
+  color: #F6F4EE;
+  padding: 4px 8px;
+  pointer-events: none;
+}
+.theater-root .faculty-live.paused,
+.theater-root .faculty-live.seated {
+  background: #16181B;
+}
+.theater-root .hit-stamp {
+  position: absolute;
+  z-index: 7;
+  right: 6%;
+  top: 22%;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: #c1121f;
+  border: 5px solid #c1121f;
+  padding: 0.08em 0.18em 0.02em;
+  transform: rotate(-16deg);
+  pointer-events: none;
+  animation: stamp-slam 0.42s cubic-bezier(0.16, 1.25, 0.3, 1) both;
+  background: rgba(246, 244, 238, 0.12);
+}
+.theater-root .hit-stamp.refuse {
+  color: #16181B;
+  border-color: #16181B;
+}
+.theater-root .hit-stamp.speak {
+  color: #1b4332;
+  border-color: #1b4332;
+  top: 12%;
+}
+@keyframes stamp-slam {
+  0% { opacity: 0; transform: rotate(-16deg) scale(1.85); }
+  65% { opacity: 1; transform: rotate(-12deg) scale(0.94); }
+  100% { opacity: 1; transform: rotate(-16deg) scale(1); }
+}
+.theater-root .detention {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 10px;
+  width: min(300px, 72%);
+  transform: translateX(-50%) translateY(-14px);
+  animation: slip-in 0.45s cubic-bezier(0.16, 1.1, 0.3, 1) forwards;
+  background: #f3c4be;
+  color: #16181B;
+  border: 2px solid #16181B;
+  box-shadow: 4px 4px 0 #16181B;
+  padding: 10px 12px 12px;
+  font-family: "Space Grotesk", sans-serif;
+  pointer-events: none;
+}
+@keyframes slip-in {
+  to { transform: translateX(-50%) translateY(0); }
+}
+.theater-root .detention-mark {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+.theater-root .detention p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.theater-root .stage.caught {
+  box-shadow: inset 0 0 0 3px #c1121f;
+}
+.theater-root .stage.seated {
+  box-shadow: inset 0 0 0 3px #16181B;
+}

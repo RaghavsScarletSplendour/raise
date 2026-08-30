@@ -88,7 +88,7 @@ export default function Shuffle() {
       <div className="topbar">
         <div>
           <div className="stamp">RAISE</div>
-          <div className="tagline">lock a concept. snippet, or the real lecture.</div>
+          <div className="tagline">lock a concept. interrupt the lecture. get roasted.</div>
         </div>
       </div>
 
@@ -123,7 +123,7 @@ export default function Shuffle() {
       {view === "lock" && (
         <div className="course-view active">
           <div className="course-title">{concept.label}</div>
-          <p>Locked in. A tiny snippet, or the real lecture starts playing.</p>
+          <p>Locked in. A tiny snippet, or the real lecture, which you will interrupt like a menace.</p>
           <button className="back-btn" type="button" onClick={() => setView("snippet")}>
             Just the snippet
           </button>
@@ -167,7 +167,7 @@ export default function Shuffle() {
         <PasteLecture />
         unofficial study avatar. public lecture plus public captions only.
         <br />
-        this is not the professor. it will not fake the rest of the video.
+        this is not the professor. it will not fake the rest of the video. it will just be rude.
       </footer>
     </div>
   );

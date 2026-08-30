@@ -197,21 +197,21 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
           <div id="yt" className="yt-slot" />
           <Professor out={out} />
           {mode === "yank" && (
-            <div className="banner">Rewatch. No skip. {decision?.cite}</div>
+            <div className="banner">Caught you. Rewatch. No skip. {decision?.cite}</div>
           )}
           {mode === "refuse" && (
-            <div className="banner">I haven&apos;t taught that yet. Sit down.</div>
+            <div className="banner">{decision?.text || "I haven't taught that yet. Sit down."}</div>
           )}
           <div className={`bubble ${mode === "speak" && out ? "show" : ""}`}>
             {decision?.text}
             {decision?.cite && (
-              <span className="cite">{decision.cite} · from this lecture only</span>
+              <span className="cite">{decision.cite} · this lecture only. I do not know your homework.</span>
             )}
           </div>
         </div>
       </div>
       <div className="rail">
-        <p className="coach">Three taps. In order. That is the whole demo.</p>
+        <p className="coach">Three taps. In order. If you mess this up I will know.</p>
         <div className="moves">
           {lecture.ghosts.slice(0, 3).map((g, i) => (
             <button
@@ -237,7 +237,7 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Or type your own question from this lecture"
+            placeholder="Ask something I actually said, genius"
           />
           <button className="primary" disabled={busy} type="submit">
             Raise hand

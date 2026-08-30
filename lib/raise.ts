@@ -50,6 +50,45 @@ function bestCue(q: string[], cues: Cue[]) {
   return best;
 }
 
+function pickLine(seed: string, lines: string[]) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return lines[Math.abs(h) % lines.length];
+}
+
+const REFUSE = [
+  "I haven't taught that yet. Sit down. This isn't a buffet.",
+  "Cute guess. That's later. Sit down and wait like a person.",
+  "Spoilers are for people who skip class. Sit down.",
+  "I haven't taught that yet. Your impatience is showing. Sit down.",
+  "Not yet. Sit down. I promise it will still be impressive when I actually say it.",
+];
+
+function snarkYank(cite: string, line: string) {
+  return pickLine(
+    cite + line,
+    [
+      `See? ${cite}. I already said this: "${line}" Maybe write it down this time.`,
+      `That was me, ${cite}, saying the thing you just asked. "${line}" You're welcome, I guess.`,
+      `I already covered this at ${cite}. "${line}" Rewatching is free. Attention, apparently, is not.`,
+      `Timestamp ${cite}. I said "${line}" out loud. In this room. Try existing here.`,
+    ]
+  );
+}
+
+function snarkAnswer(cite: string, bits: string) {
+  return pickLine(
+    cite + bits,
+    [
+      `Fine. From ${cite}, since listening was optional: ${bits}`,
+      `Paying attention is a sport you sit out, I see. ${cite}: ${bits}`,
+      `From the part that was not a secret (${cite}): ${bits} Try to keep up.`,
+      `Yes, I will repeat myself. Slowly. ${cite}. ${bits}`,
+      `Oh good, a question I already answered. ${cite}: ${bits} Now sit.`,
+    ]
+  );
+}
+
 export function decide(cues: Cue[], currentTime: number, question: string): Decision {
   const q = tokenize(question);
   // Judges mash the chip the second the hall opens. A line a few seconds
@@ -71,7 +110,7 @@ export function decide(cues: Cue[], currentTime: number, question: string): Deci
   if (afterStrong || (beforeBest.score < 0.22 && afterBlob > 0.28)) {
     return {
       kind: "refuse",
-      text: "I haven't taught that yet. Sit down.",
+      text: pickLine(question + String(currentTime), REFUSE),
     };
   }
 
@@ -85,7 +124,7 @@ export function decide(cues: Cue[], currentTime: number, question: string): Deci
         t: cue.start,
         cite,
         line: cue.text,
-        text: `I already said this. Timestamp ${cite}. Watch it again. No skipping.`,
+        text: snarkYank(cite, cue.text),
       };
     }
     const window = before.filter((c) => c.start >= currentTime - 100);
@@ -94,12 +133,12 @@ export function decide(cues: Cue[], currentTime: number, question: string): Deci
       kind: "answer",
       cite,
       line: cue.text,
-      text: `From what I just covered (${cite}): ${bits.slice(-3).join(" ")}`,
+      text: snarkAnswer(cite, bits.slice(-3).join(" ")),
     };
   }
 
   if (afterBlob > beforeBlob && afterBlob > 0.18) {
-    return { kind: "refuse", text: "I haven't taught that yet. Sit down." };
+    return { kind: "refuse", text: pickLine(question + "late", REFUSE) };
   }
 
   const fallback = before.slice(-3).map((c) => c.text).join(" ");
@@ -107,7 +146,10 @@ export function decide(cues: Cue[], currentTime: number, question: string): Deci
     kind: "answer",
     cite: before.length ? mmss(before[before.length - 1].start) : "00:00",
     text: fallback
-      ? `From what I've said so far: ${fallback}`
-      : "Sit down. I have barely started.",
+      ? snarkAnswer(
+          before.length ? mmss(before[before.length - 1].start) : "00:00",
+          fallback
+        )
+      : "Sit down. I have barely opened my mouth. Let me start before you quiz me.",
   };
 }

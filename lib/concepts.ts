@@ -12,56 +12,56 @@ export const CONCEPTS: Concept[] = [
     label: "Psychology",
     youtubeId: "vo4pMVb0R6M",
     snippet:
-      "Psychology is the study of behavior and mental processes. How you think, feel, and act, and why.",
+      "Psychology is the study of why you think you're interesting. Behavior, feelings, the embarrassing bits you swear you hide.",
   },
   {
     id: "gravity",
     label: "Gravity",
     youtubeId: "TRAbZxQHlVw",
     snippet:
-      "Mass pulls on mass. That pull is gravity. It keeps you on the ground, and planets on their tracks.",
+      "Mass pulls on mass. That pull is gravity. It's why you stay on the floor. No, you cannot opt out.",
   },
   {
     id: "quantum-computing",
     label: "Quantum Computing",
     youtubeId: "JhHMJCUmq28",
     snippet:
-      "A normal bit is 0 or 1. A qubit can be both at once, until you look. That is the whole trick, and the whole headache.",
+      "A bit is 0 or 1. A qubit is both, until you look, at which point it collapses and so does your confidence. That's the trick.",
   },
   {
     id: "dna",
     label: "DNA",
     youtubeId: "8kK2zwjRV0M",
     snippet:
-      "DNA is a double helix of four letters. Those letters are the instructions for building and copying a living thing.",
+      "DNA is four letters pretending to be a novel. Those letters copy you, badly, forever. Congratulations, you're a recipe.",
   },
   {
     id: "black-holes",
     label: "Black Holes",
     youtubeId: "qZWPBKULkdQ",
     snippet:
-      "If you squeeze enough mass into a tiny space, even light cannot climb out. That is a black hole.",
+      "Squeeze enough mass into a tiny space and even light cannot climb out. A black hole. Your attention span, but with physics.",
   },
   {
     id: "evolution",
     label: "Evolution",
     youtubeId: "P3GagfbA2vo",
     snippet:
-      "Genes shift a little each generation. Over time, that is how one species becomes many.",
+      "Genes shift a little each generation. Over time, one species becomes many. Nobody voted. Nobody asked you.",
   },
   {
     id: "computers",
     label: "Computers",
     youtubeId: "O5nskjZ_GoI",
     snippet:
-      "A computer is just switches that add and remember. Stack enough of them and you get everything from calculators to the internet.",
+      "A computer is switches that add and remember. Stack enough of them and you get the internet, which you use to skip class.",
   },
   {
     id: "atoms",
     label: "Atoms",
     youtubeId: "FSyAehMdpyI",
     snippet:
-      "Everything is atoms. A tiny positive nucleus, electrons farther out. Chemistry is those electrons bumping into each other.",
+      "Everything is atoms. Tiny nucleus, electrons farther out. Chemistry is those electrons bumping into each other like you in a hallway.",
   },
 ];
 
@@ -76,6 +76,8 @@ export const PHRASES = [
   "Every adult should already know this:",
   "You've avoided this long enough:",
   "Congratulations, today you learn",
+  "Oh, you think you know",
+  "Please stop Googling and actually learn",
 ];
 
 export const NO_MILD = [

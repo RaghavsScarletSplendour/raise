@@ -13,7 +13,7 @@ export default function PasteLecture() {
     e.preventDefault();
     const id = parseYouTubeId(val);
     if (!id) {
-      setErr("Need a full YouTube link, or the 11-character video id.");
+      setErr("That is not a YouTube link. Try again, with the whole URL this time.");
       return;
     }
     setErr("");
@@ -31,11 +31,11 @@ export default function PasteLecture() {
           placeholder="https://www.youtube.com/watch?v=26QPDBe-NB8"
         />
         <button className="submit-btn" type="submit">
-          Open it
+          Interrupt it
         </button>
       </div>
       {err ? <p className="fine warn">{err}</p> : (
-        <p className="fine">Public captions. Same rules: already said, not yet, or said a while ago.</p>
+        <p className="fine">Public captions. Ask too early and you sit. Ask too late and you get yanked. I do not do spoilers.</p>
       )}
     </form>
   );

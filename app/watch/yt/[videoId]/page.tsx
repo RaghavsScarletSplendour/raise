@@ -15,9 +15,9 @@ export default async function WatchYouTube({
         <div className="mark">RAISE</div>
         <h1>No captions</h1>
         <p className="lede">
-          That video has no public captions we can read, so the professor
-          would be guessing. Pick a lecture with captions on, or use the
-          Crash Course demo.
+          That video has no public captions. I refuse to guess. Pick a
+          lecture that actually captions itself, or use the Crash Course demo
+          like someone who wants this to work.
         </p>
         <p className="fine">
           <a href="/">Back</a>

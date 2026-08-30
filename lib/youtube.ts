@@ -224,22 +224,22 @@ export function lectureFromCaptions(
   const ghosts = early
     ? [
         {
-          label: "Something already said",
-          hint: "Climb out",
+          label: "Something I already said",
+          hint: "Climbs out, unimpressed",
           move: "ask" as const,
           question: clip(early.text),
         },
         ...(late && late.start > (early.start || 0) + 20
           ? [
               {
-                label: "Something later",
-                hint: "Sit down",
+                label: "Something later. Cute.",
+                hint: "Sit down, obviously",
                 move: "ask" as const,
                 question: clip(late.text),
               },
               {
                 label: "Ask the first thing later",
-                hint: "Yank back",
+                hint: "Yanked. You knew this.",
                 move: "later-then-ask" as const,
                 question: clip(early.text),
               },
@@ -255,7 +255,7 @@ export function lectureFromCaptions(
     prof: author,
     hall: "Any public lecture · captions from this video",
     chip: "Your lecture",
-    blurb: "Answers only from this video's public captions.",
+    blurb: "Answers only from this video. Rudely.",
     laterAt,
     ghosts,
     captions,

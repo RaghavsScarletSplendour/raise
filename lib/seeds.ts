@@ -24,9 +24,9 @@ export const LECTURES: Lecture[] = [
     blurb: "Twelve minutes. What an OS is, then virtual memory later.",
     laterAt: 400,
     ghosts: [
-      { label: "What is an OS?", hint: "She climbs out", move: "ask", question: "What is an operating system?" },
-      { label: "Virtual memory?", hint: "She hasn't taught it", move: "ask", question: "How does virtual memory work?" },
-      { label: "Ask that again, later", hint: "She yanks you back", move: "later-then-ask", question: "What is an operating system?" },
+      { label: "What is an OS?", hint: "She climbs out, unimpressed", move: "ask", question: "What is an operating system?" },
+      { label: "Virtual memory?", hint: "She hasn't taught it. Sit down.", move: "ask", question: "How does virtual memory work?" },
+      { label: "Ask that again, later", hint: "She yanks you back. Obviously.", move: "later-then-ask", question: "What is an operating system?" },
     ],
     captions: [
       { start: 4, text: "Hi, I'm Carrie Anne, and welcome to Crash Course Computer Science." },

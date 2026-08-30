@@ -21,9 +21,10 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   const [ready, setReady] = useState(false);
   const [mode, setMode] = useState<Mode>("idle");
   const [out, setOut] = useState(false);
-  const [q, setQ] = useState(lecture.ghosts[0]?.question || "");
+  const [q, setQ] = useState("");
   const [decision, setDecision] = useState<Decision | null>(null);
   const [busy, setBusy] = useState(false);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -40,10 +41,15 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
+          autoplay: 1,
         },
         events: {
-          onReady: () => {
-            if (!cancelled) setReady(true);
+          onReady: (e: any) => {
+            if (cancelled) return;
+            try {
+              e.target.playVideo();
+            } catch {}
+            setReady(true);
           },
         },
       });
@@ -117,13 +123,14 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     window.setTimeout(() => climbBack(resumeAt.current), 7200);
   }
 
-  function raise(question: string) {
+  function raise(question: string, forcedTime?: number) {
     if (busy) return;
     const text = question.trim();
     if (!text) return;
     setBusy(true);
-    const currentTime = now();
-    resumeAt.current = currentTime;
+    const currentTime =
+      typeof forcedTime === "number" ? forcedTime : now() || 12;
+    resumeAt.current = now() || currentTime;
     const data = decide(lecture.captions, currentTime, text);
     setDecision(data);
 
@@ -165,10 +172,13 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     speakThenBack();
   }
 
-  function later() {
-    if (busy) return;
-    seek(lecture.laterAt);
-    play();
+  function tapMove(i: number) {
+    const g = lecture.ghosts[i];
+    if (!g || busy) return;
+    setQ(g.question);
+    setStep(i + 1);
+    if (g.move === "later-then-ask") raise(g.question, lecture.laterAt);
+    else raise(g.question);
   }
 
   const frozen = mode === "speak";
@@ -201,27 +211,22 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
         </div>
       </div>
       <div className="rail">
-        <button
-          className="hand primary"
-          disabled={busy}
-          onClick={() => raise(q)}
-          title="Raise hand"
-        >
-          Raise hand
-        </button>
-        {lecture.ghosts.map((g) => (
-          <button
-            key={g.label}
-            className="ghost"
-            disabled={busy}
-            onClick={() => {
-              setQ(g.question);
-              raise(g.question);
-            }}
-          >
-            {g.label}
-          </button>
-        ))}
+        <p className="coach">Three taps. In order. That is the whole demo.</p>
+        <div className="moves">
+          {lecture.ghosts.slice(0, 3).map((g, i) => (
+            <button
+              key={g.label}
+              className={`move ${i === 0 && step === 0 ? "primary" : ""} ${step === i + 1 ? "on" : ""}`}
+              disabled={busy}
+              onClick={() => tapMove(i)}
+              type="button"
+            >
+              <span className="n">Tap {i + 1}</span>
+              <span className="lab">{g.label}</span>
+              <span className="hint">{g.hint}</span>
+            </button>
+          ))}
+        </div>
         <form
           className="ask"
           onSubmit={(e) => {
@@ -232,15 +237,12 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Raise a question from this lecture"
+            placeholder="Or type your own question from this lecture"
           />
           <button className="primary" disabled={busy} type="submit">
-            Ask
+            Raise hand
           </button>
         </form>
-        <button className="later" type="button" disabled={busy} onClick={later}>
-          Later in the lecture
-        </button>
       </div>
     </div>
   );

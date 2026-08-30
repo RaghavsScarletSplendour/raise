@@ -9,7 +9,7 @@ export type Lecture = {
   chip: string;
   blurb: string;
   laterAt: number;
-  ghosts: { label: string; question: string }[];
+  ghosts: { label: string; question: string; hint: string; move: "ask" | "later-then-ask" }[];
   captions: Cue[];
 };
 
@@ -24,8 +24,9 @@ export const LECTURES: Lecture[] = [
     blurb: "Twelve minutes. What an OS is, then virtual memory later.",
     laterAt: 400,
     ghosts: [
-      { label: "What is an OS?", question: "What is an operating system?" },
-      { label: "Virtual memory?", question: "How does virtual memory work?" },
+      { label: "What is an OS?", hint: "She climbs out", move: "ask", question: "What is an operating system?" },
+      { label: "Virtual memory?", hint: "She hasn't taught it", move: "ask", question: "How does virtual memory work?" },
+      { label: "Ask that again, later", hint: "She yanks you back", move: "later-then-ask", question: "What is an operating system?" },
     ],
     captions: [
       { start: 4, text: "Hi, I'm Carrie Anne, and welcome to Crash Course Computer Science." },
@@ -60,8 +61,9 @@ export const LECTURES: Lecture[] = [
     blurb: "A trolley, a bridge, a show of hands.",
     laterAt: 700,
     ghosts: [
-      { label: "The trolley", question: "What should the trolley driver do about the five workers?" },
-      { label: "Kant already?", question: "What does Kant say about categorical moral duties?" },
+      { label: "The trolley", hint: "He climbs out", move: "ask", question: "What should the trolley driver do about the five workers?" },
+      { label: "Kant already?", hint: "He hasn't taught it", move: "ask", question: "What does Kant say about categorical moral duties?" },
+      { label: "Ask the trolley later", hint: "He yanks you back", move: "later-then-ask", question: "What should the trolley driver do about the five workers?" },
     ],
     captions: [
       { start: 12, text: "This is a course about Justice, and we begin with a story." },
@@ -94,8 +96,9 @@ export const LECTURES: Lecture[] = [
     blurb: "A measurement without uncertainty is meaningless.",
     laterAt: 600,
     ghosts: [
-      { label: "The units", question: "What units does Lewin introduce for length, time, and mass?" },
-      { label: "Lagrangian?", question: "How do we write the Lagrangian for this system?" },
+      { label: "The units", hint: "He climbs out", move: "ask", question: "What units does Lewin introduce for length, time, and mass?" },
+      { label: "Lagrangian?", hint: "He hasn't taught it", move: "ask", question: "How do we write the Lagrangian for this system?" },
+      { label: "Ask the units later", hint: "He yanks you back", move: "later-then-ask", question: "What units does Lewin introduce for length, time, and mass?" },
     ],
     captions: [
       { start: 8, text: "I am Walter Lewin. I will be your lecturer this term." },

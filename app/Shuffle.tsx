@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import PasteLecture from "./PasteLecture";
 import {
   CONCEPTS,
@@ -90,6 +91,9 @@ export default function Shuffle() {
           <div className="stamp">RAISE</div>
           <div className="tagline">lock a concept. interrupt the lecture. get roasted.</div>
         </div>
+        <Link href="/you" className="roast-link">
+          Roast me first
+        </Link>
       </div>
 
       {view === "shuffle" && (
@@ -168,6 +172,10 @@ export default function Shuffle() {
         unofficial study avatar. public lecture plus public captions only.
         <br />
         this is not the professor. it will not fake the rest of the video. it will just be rude.
+        <br />
+        <Link href="/you" className="roast-link">
+          Roast me first
+        </Link>
       </footer>
     </div>
   );

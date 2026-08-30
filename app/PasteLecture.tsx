@@ -28,14 +28,14 @@ export default function PasteLecture() {
           id="yt-url"
           value={val}
           onChange={(e) => setVal(e.target.value)}
-          placeholder="https://www.youtube.com/watch?v=…"
+          placeholder="https://www.youtube.com/watch?v=26QPDBe-NB8"
         />
-        <button className="primary" type="submit">
+        <button className="submit-btn" type="submit">
           Open it
         </button>
       </div>
-      {err ? <p className="fine">{err}</p> : (
-        <p className="fine">Needs public captions. Same rules: already said, not yet, or said a while ago.</p>
+      {err ? <p className="fine warn">{err}</p> : (
+        <p className="fine">Public captions. Same rules: already said, not yet, or said a while ago.</p>
       )}
     </form>
   );

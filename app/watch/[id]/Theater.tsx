@@ -186,10 +186,10 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
   return (
     <div className="theater-root">
       <div className="topbar">
-        <Link href="/">RAISE</Link>
+        <Link href="/" className="stamp">RAISE</Link>
         <div className="meta">
-          {lecture.prof} · {lecture.hall}
-          {ready ? "" : " · cueing the projector"}
+          {lecture.prof}
+          {ready ? "" : " · loading"}
         </div>
       </div>
       <div className="stage-wrap">
@@ -251,19 +251,17 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
 function Professor({ out }: { out: boolean }) {
   return (
     <svg className={`prof ${out ? "out" : ""}`} viewBox="0 0 160 220" aria-hidden>
-      <ellipse cx="80" cy="208" rx="48" ry="8" fill="rgba(0,0,0,0.35)" />
-      <path d="M46 206c8-46 18-78 34-92 16 14 26 46 34 92" fill="#2a1810" />
-      <path d="M52 200c10-40 14-70 28-82 14 12 18 42 28 82" fill="#c9a227" opacity="0.35" />
-      <rect x="58" y="92" width="44" height="58" rx="14" fill="#3d2a14" />
-      <rect x="62" y="98" width="36" height="46" rx="12" fill="#5c1220" />
-      <circle cx="80" cy="72" r="22" fill="#e8d5a3" />
-      <path d="M58 68c6-22 38-22 44 0" fill="#2a1810" />
-      <circle cx="72" cy="74" r="3" fill="#140c07" />
-      <circle cx="88" cy="74" r="3" fill="#140c07" />
-      <path d="M62 74h20M78 74h20" stroke="#140c07" strokeWidth="2" fill="none" />
-      <path d="M72 84c4 6 12 6 16 0" stroke="#8a6a16" strokeWidth="2" fill="none" />
-      <rect x="118" y="118" width="6" height="54" rx="2" fill="#e8d5a3" />
-      <circle cx="121" cy="116" r="5" fill="#c9a227" />
+      <ellipse cx="80" cy="208" rx="36" ry="6" fill="rgba(22,24,27,0.18)" />
+      <path d="M52 206c8-48 16-80 28-94 12 14 20 46 28 94" fill="#16181B" />
+      <rect x="62" y="98" width="36" height="48" rx="10" fill="#16181B" />
+      <rect x="66" y="104" width="28" height="36" rx="8" fill="#FFCE45" />
+      <circle cx="80" cy="74" r="20" fill="#F6F4EE" stroke="#16181B" strokeWidth="3" />
+      <path d="M62 70c6-16 30-16 36 0" fill="#16181B" />
+      <circle cx="73" cy="76" r="2.4" fill="#16181B" />
+      <circle cx="87" cy="76" r="2.4" fill="#16181B" />
+      <path d="M73 86c4 5 10 5 14 0" stroke="#16181B" strokeWidth="2" fill="none" />
+      <rect x="118" y="120" width="5" height="48" rx="2" fill="#16181B" />
+      <circle cx="120.5" cy="118" r="4" fill="#FFCE45" />
     </svg>
   );
 }

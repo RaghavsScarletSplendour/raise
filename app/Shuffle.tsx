@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import PasteLecture from "./PasteLecture";
 import {
   CONCEPTS,
   NO_ESCALATED,
@@ -78,7 +79,8 @@ export default function Shuffle() {
   }
 
   function learnMore() {
-    router.push(`/watch/${concept.lectureId}`);
+    if (concept.youtubeId) router.push(`/watch/yt/${concept.youtubeId}`);
+    else if (concept.lectureId) router.push(`/watch/${concept.lectureId}`);
   }
 
   return (
@@ -162,6 +164,7 @@ export default function Shuffle() {
       )}
 
       <footer>
+        <PasteLecture />
         unofficial study avatar. public lecture plus public captions only.
         <br />
         this is not the professor. it will not fake the rest of the video.

@@ -1,80 +1,67 @@
 export type Concept = {
   id: string;
   label: string;
-  lectureId: string;
+  lectureId?: string;
+  youtubeId?: string;
   snippet: string;
 };
 
 export const CONCEPTS: Concept[] = [
   {
-    id: "operating-systems",
-    label: "Operating Systems",
-    lectureId: "os",
+    id: "psychology",
+    label: "Psychology",
+    youtubeId: "vo4pMVb0R6M",
     snippet:
-      "An operating system is just a program with special privileges. It starts first, then launches and manages every other program on the machine.",
+      "Psychology is the study of behavior and mental processes. How you think, feel, and act, and why.",
   },
   {
-    id: "virtual-memory",
-    label: "Virtual Memory",
-    lectureId: "os",
+    id: "gravity",
+    label: "Gravity",
+    youtubeId: "TRAbZxQHlVw",
     snippet:
-      "Virtual memory lets a program pretend its memory always starts at address zero. The OS hides the real physical location, and a buggy program can only trash its own space.",
+      "Mass pulls on mass. That pull is gravity. It keeps you on the ground, and planets on their tracks.",
   },
   {
-    id: "multitasking",
-    label: "Multitasking",
-    lectureId: "os",
+    id: "quantum-computing",
+    label: "Quantum Computing",
+    youtubeId: "JhHMJCUmq28",
     snippet:
-      "The Atlas Supervisor, finished in 1962, could run several programs at the same time on a single CPU. That ability is called multitasking.",
+      "A normal bit is 0 or 1. A qubit can be both at once, until you look. That is the whole trick, and the whole headache.",
   },
   {
-    id: "unix",
-    label: "Unix",
-    lectureId: "os",
+    id: "dna",
+    label: "DNA",
+    youtubeId: "8kK2zwjRV0M",
     snippet:
-      "Multics led Dennis Ritchie and Ken Thompson to build Unix: a lean kernel, and a panic function if the kernel crashes.",
+      "DNA is a double helix of four letters. Those letters are the instructions for building and copying a living thing.",
   },
   {
-    id: "trolley-problem",
-    label: "The Trolley Problem",
-    lectureId: "justice",
+    id: "black-holes",
+    label: "Black Holes",
+    youtubeId: "qZWPBKULkdQ",
     snippet:
-      "A trolley is hurtling toward five workers. Your brakes fail. A side track has one worker. Turn, and you kill one to spare five. Most people would turn.",
+      "If you squeeze enough mass into a tiny space, even light cannot climb out. That is a black hole.",
   },
   {
-    id: "fat-man-bridge",
-    label: "The Man On The Bridge",
-    lectureId: "justice",
+    id: "evolution",
+    label: "Evolution",
+    youtubeId: "P3GagfbA2vo",
     snippet:
-      "Now you are on a bridge. You could shove a very large man onto the track to stop the trolley. He dies. Five live. Most people would not push.",
+      "Genes shift a little each generation. Over time, that is how one species becomes many.",
   },
   {
-    id: "five-vs-one",
-    label: "Better That Five Live",
-    lectureId: "justice",
+    id: "computers",
+    label: "Computers",
+    youtubeId: "O5nskjZ_GoI",
     snippet:
-      "If the reason is 'better that five should live,' shoving the man should feel the same as turning the trolley. It does not. That is the puzzle.",
+      "A computer is just switches that add and remember. Stack enough of them and you get everything from calculators to the internet.",
   },
   {
-    id: "units",
-    label: "Units And Uncertainty",
-    lectureId: "lewin",
+    id: "atoms",
+    label: "Atoms",
+    youtubeId: "FSyAehMdpyI",
     snippet:
-      "A measurement without uncertainty is meaningless. Every number in physics carries units, and the units have to make the equation honest.",
-  },
-  {
-    id: "dimensional-analysis",
-    label: "Dimensional Analysis",
-    lectureId: "lewin",
-    snippet:
-      "The time for an apple to fall scales with the square root of height over g. Drop from three meters and from one and a half: the ratio of times is the square root of two.",
-  },
-  {
-    id: "scaling",
-    label: "Why Elephants Don't Break",
-    lectureId: "lewin",
-    snippet:
-      "Galileo argued that if animals get too massive, the bones break. Mass grows with size cubed, bone strength with area. The scaling is the lesson.",
+      "Everything is atoms. A tiny positive nucleus, electrons farther out. Chemistry is those electrons bumping into each other.",
   },
 ];
 

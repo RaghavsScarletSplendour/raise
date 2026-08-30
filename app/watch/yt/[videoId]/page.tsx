@@ -11,7 +11,7 @@ export default async function WatchYouTube({
   const lecture = await loadYouTubeLecture(params.videoId);
   if (!lecture) {
     return (
-      <main className="hall">
+      <main className="no-captions">
         <div className="mark">RAISE</div>
         <h1>No captions</h1>
         <p className="lede">
@@ -20,7 +20,7 @@ export default async function WatchYouTube({
           Crash Course demo.
         </p>
         <p className="fine">
-          <a href="/">Back to the hall</a>
+          <a href="/">Back</a>
         </p>
       </main>
     );

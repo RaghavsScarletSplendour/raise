@@ -137,11 +137,9 @@ export default function Theater({ lecture }: { lecture: Lecture }) {
     const data = decide(lecture.captions, currentTime, text);
     setDecision(data);
     if (data.kind === "yank" || data.kind === "refuse") {
+      const kind: Strike["kind"] = data.kind;
       setStrikes((n) => n + 1);
-      setLog((rows) => [
-        ...rows,
-        { kind: data.kind, cite: data.cite },
-      ]);
+      setLog((rows) => [...rows, { kind, cite: data.cite }]);
     }
 
     if (data.kind === "refuse") {
